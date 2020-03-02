@@ -21,9 +21,8 @@ public class Main3Activity extends AppCompatActivity {
     DBHelper dbHelper = new DBHelper(sqLiteDatabase);
 
     public void saveMethod(View view) {
-        Note note = Main2Activity.notes.get(noteid);
-        String noteContent = note.getContent();
-        String content = noteContent;
+        EditText myTextField = (EditText) findViewById(R.id.myTextField3);
+        String content = myTextField.getText().toString();
         SharedPreferences sharedPreferences = getSharedPreferences("c.sakshi.lab5", Context.MODE_PRIVATE);
         String username = sharedPreferences.getString(MainActivity.usernameKey, "");
         String title;
@@ -47,14 +46,13 @@ public class Main3Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
 
-        EditText myTextField = (EditText) findViewById(R.id.myTextField3);
         Intent intent = getIntent();
         noteid = intent.getIntExtra("noteid", noteid);
-
 
         if (noteid != -1) {
             Note note = Main2Activity.notes.get(noteid);
             String noteContent = note.getContent();
+            EditText myTextField = (EditText) findViewById(R.id.myTextField3);
             myTextField.setText(noteContent);
         }
     }
