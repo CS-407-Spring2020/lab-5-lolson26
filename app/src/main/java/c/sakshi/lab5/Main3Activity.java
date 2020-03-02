@@ -18,7 +18,7 @@ public class Main3Activity extends AppCompatActivity {
     int noteid = -1;
 
     SQLiteDatabase sqLiteDatabase;
-    DBHelper dbHelper = new DBHelper(sqLiteDatabase);
+    DBHelper dbHelper;
 
     public void saveMethod(View view) {
         EditText myTextField = (EditText) findViewById(R.id.myTextField3);
@@ -37,6 +37,11 @@ public class Main3Activity extends AppCompatActivity {
             title = "NOTE_" + (noteid + 1);
             dbHelper.updateNote(title, date, content, username);
         }
+
+        goToActivity2();
+    }
+
+    public void goToActivity2() {
         Intent intent = new Intent(this, Main2Activity.class);
         startActivity(intent);
     }
@@ -45,6 +50,9 @@ public class Main3Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
+
+        sqLiteDatabase = getApplicationContext().openOrCreateDatabase("notes",Context.MODE_PRIVATE, null​);
+        dbHelper = new DBHelper(sqLiteDatabase);
 
         Intent intent = getIntent();
         noteid = intent.getIntExtra("noteid", noteid);

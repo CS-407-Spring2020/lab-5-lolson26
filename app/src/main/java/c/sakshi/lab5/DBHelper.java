@@ -30,7 +30,7 @@ public class DBHelper {
         createTable();
         Cursor c = sqLiteDatabase.rawQuery(String.format("SELECT * from notes where username like '%s'", username), null);
 
-       int dateIndex = c.getColumnIndex("data");
+       int dateIndex = c.getColumnIndex("date");
        int titleIndex = c.getColumnIndex("title");
        int contentIndex = c.getColumnIndex("content");
 

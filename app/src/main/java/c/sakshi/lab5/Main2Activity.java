@@ -3,6 +3,7 @@ package c.sakshi.lab5;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,6 +24,9 @@ public class Main2Activity extends AppCompatActivity {
     TextView textView2;
 
     public static ArrayList<Note> notes = new ArrayList<>();
+
+    SQLiteDatabase sqLiteDatabase;
+    DBHelper dbHelper;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -54,10 +58,15 @@ public class Main2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+        sqLiteDatabase = getApplicationContext().openOrCreateDatabase("notes",Context.MODE_PRIVATE, null​);
+        dbHelper = new DBHelper(sqLiteDatabase);
+
         SharedPreferences sharedPreferences = getSharedPreferences("c.sakshi.lab5", Context.MODE_PRIVATE);
         String username = sharedPreferences.getString(MainActivity.usernameKey, "");
         textView2 = (TextView) findViewById(R.id.textView2);
         textView2.setText("Welcome " + username + "!");
+
+        notes = dbHelper.readNotes(username);
 
         ArrayList<String> displayNotes = new ArrayList<>();
         for (Note note : notes) {
